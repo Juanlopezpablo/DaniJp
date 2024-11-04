@@ -1,0 +1,7 @@
+{
+  "name": "ApliDadi",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
