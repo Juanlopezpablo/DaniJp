@@ -111,7 +111,7 @@ export class ApiService {
   async obtenerVehiculo(){
     try {
       const params = {
-        p_id: "",
+        p_id: "", hola
         token: ''
       }
       const response = await lastValueFrom(this.http.get<any>(environment.apiUrl + 'vehiculo/obtener',{params}));
