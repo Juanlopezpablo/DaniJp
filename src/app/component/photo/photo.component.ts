@@ -11,12 +11,13 @@ export class PhotoComponent  implements OnInit {
 
   imageUrl: string | undefined;
 
-  constructor() {
+
+  constructor() { 
     Camera.requestPermissions();
-   }
+  }
 
   ngOnInit() {}
-
+  
   async takePicture() {
     const image = await Camera.getPhoto({
       quality: 90,
@@ -27,5 +28,4 @@ export class PhotoComponent  implements OnInit {
 
     this.imageUrl = image.webPath; // Guardamos la URL de la imagen capturada
   }
-
 }

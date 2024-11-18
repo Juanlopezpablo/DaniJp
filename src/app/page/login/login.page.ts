@@ -12,37 +12,36 @@ import { StorageService } from 'src/app/service/storage.service';
 })
 export class LoginPage implements OnInit {
 
-  email="";
-  password="";
-  tokenID:any="";
+  email= ""
+  password= ""
+  tokenID: any = "";
 
-  constructor(private firebase:FirebaseService, private router:Router, private alertcontroller:AlertController, private storage:StorageService) { }
+  constructor(private firebase:FirebaseService, private router: Router, private alertcontroller:AlertController, private storage: StorageService) { }
 
   ngOnInit() {
   }
 
   async login(){
-    try {
-      let usuario=await this.firebase.auth(this.email,this.password);
-      this.tokenID=await usuario.user?.getIdToken();
+    try{
+      let usuario=await this.firebase.auth(this.email, this.password);
+      this.tokenID = await usuario.user?.getIdToken();
+      console.log("token",await usuario.user?.getIdToken()) 
       console.log(usuario);
-      console.log("TokenID",await usuario.user?.getIdToken());
-      const navigationExtras:NavigationExtras = {
-        queryParams: {email: this.email}
+      const navigationExtras: NavigationExtras ={
+        queryParams: {email: this.email, password: this.password}
       };
-      this.pruebaStorage();
       this.router.navigate(['/principal'], navigationExtras);
-    } catch (error) {
+      this.pruebaStorage();
+    } catch(error){
       console.log(error);
       this.popAlert();
     }
   }
-
   async popAlert(){
     const alert=await this.alertcontroller.create({
-      header:'Error',
-      message:"Usuario o contraseña incorrecta",
-      buttons:['OK']
+      header:'error',
+      message:"Usuario o contraseña incorrecto",
+      buttons:[' OK']
     })
     await alert.present();
   }
@@ -50,11 +49,13 @@ export class LoginPage implements OnInit {
   async pruebaStorage(){
     const jsonToken:any=[
       {
-        "token":this.tokenID,
+        "token":this.tokenID
+      },
+      {
+        "email":this.email
       }
     ];
     this.storage.agregarStorage(jsonToken);
     console.log(await this.storage.obtenerStorage());
   }
-
 }

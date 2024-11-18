@@ -1,10 +1,11 @@
 <ion-header>
   <ion-toolbar>
-    <img src="assets/img/seguro.png" width="50%" height="50%">
+    <ion-title></ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding" style="--background: #000000;">  
+<ion-content class="ion-padding" style="--background: #d6eaf8;">
+  <img src="assets/img/DeloDaju.jpg" alt="" class="center-image">
   <div>
     <h1> 
       <ion-item>
@@ -15,7 +16,7 @@
         <ion-input [(ngModel)]="password" label="Password" type="password" value=""></ion-input>
       </ion-item>
 
-      <ion-button (click)="login()" expand="block">Login</ion-button>
+      <ion-button (click)="login()">Login</ion-button>
     </h1>
   </div>
 
@@ -24,7 +25,7 @@
       <ion-row>
         <ion-col class="registrar">
           <div>
-            <a [routerLink]="['/crearuser']" routerLinkActive="router-Link-Active">registrar</a>
+            <a [routerLink]="['/crearus']" routerLinkActive="router-Link-Active">registrar</a>
           </div>
         </ion-col>
         <ion-col class="recuperar">
@@ -36,3 +37,4 @@
     </ion-grid>
   </div>
 </ion-content>
+

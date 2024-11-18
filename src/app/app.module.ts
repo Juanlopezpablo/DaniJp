@@ -14,7 +14,6 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { provideHttpClient } from '@angular/common/http'
 import { PhotoComponent } from './component/photo/photo.component';
 
-
 @NgModule({
   declarations: [AppComponent,PhotoComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, AngularFireAuthModule, AngularFireModule.initializeApp(environment.firebaseConfig)],

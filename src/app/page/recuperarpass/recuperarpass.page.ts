@@ -9,18 +9,18 @@ import { FirebaseService } from 'src/app/service/firebase.service';
 })
 export class RecuperarpassPage implements OnInit {
 
+  constructor(private firebase:FirebaseService, private router:Router) { }
+
   email=""
   password=""
 
-  constructor(private firebase:FirebaseService, private router:Router) { }
-
   ngOnInit() {
   }
-
+  
   async recuperar(){
     let usuario=await this.firebase.recuperar(this.email);
     console.log(usuario);
-    this.router.navigateByUrl("login")      
-}  
+    this.router.navigateByUrl("login")
+  }
 
 }

@@ -1,0 +1,38 @@
+/* Estilo para el campo de búsqueda */
+.custom-searchbar {
+    --background: #f2f3f4;
+    --ion-color-text: #000; /* Color del texto */
+    --ion-color-placeholder: #000; /* Color del placeholder */
+    --ion-color-input: #000; /* Color del texto que se escribe */
+  }
+  
+  /* Fondo de pantalla */
+  .main-content {
+    --background: #d5dbdb;
+  }
+  
+  /* Estilo para los botones */
+  .custom-button {
+    --background: #f4f6f6;
+    color: #000;
+  }
+  
+  /* Estilo para centrar imágenes */
+  .center-image {
+    display: block;
+    margin: 0 auto;
+    max-width: 80%;
+    height: auto;
+  }
+  
+  /* Estilo para el mapa */
+  .maps {
+    width: 100%;
+    height: auto;
+  }
+  
+  /* Ajustes adicionales para ion-content */
+  ion-content {
+    --ion-background-color: #d5dbdb;
+  }
+  

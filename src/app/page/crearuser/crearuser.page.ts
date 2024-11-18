@@ -9,7 +9,8 @@ import { ApiService } from 'src/app/service/api.service';
   templateUrl: './crearuser.page.html',
   styleUrls: ['./crearuser.page.scss'],
 })
-export class CrearuserPage implements OnInit {
+export class crearuserpage implements OnInit {
+
   constructor(
     private firebase: FirebaseService,
     private router: Router,
@@ -17,37 +18,42 @@ export class CrearuserPage implements OnInit {
     private alertcontroller: AlertController
   ) {}
 
+  correo_electronico: string = "";
+  password: string = "";
   nombre: string = '';
-  email: string = '';
   telefono: string = '';
   token: string = '';
-  password: string = '';
-
   archivoImagen: File | null = null;
 
   ngOnInit() {}
 
   async registrar() {
+    // Verificación de campos requeridos
+    if (!this.nombre || !this.correo_electronico || !this.password || !this.telefono) {
+      this.popAlert("Por favor, completa todos los campos.");
+      return;
+    }
+
     try {
-      let usuario = await this.firebase.registrar(this.email, this.password);
+      let usuario = await this.firebase.registrar(this.correo_electronico, this.password);
       const token = await usuario.user?.getIdToken();
+
       if (this.archivoImagen) {
-        const request = await this.crearuser.agregarUsuario(
+        await this.crearuser.agregarUsuario(
           {
-            p_correo_electronico: this.email,
+            p_correo_electronico: this.correo_electronico,
             p_nombre: this.nombre,
             p_telefono: this.telefono,
             token: token,
           },
-
           this.archivoImagen
         );
       }
       console.log(usuario);
       this.router.navigateByUrl('login');
     } catch (error) {
-      this.popAlert();
-      console.log(error);
+      this.popAlert("Error al registrar el usuario. Intenta de nuevo.");
+      console.error('Error en registro:', error);
     }
   }
 
@@ -57,10 +63,10 @@ export class CrearuserPage implements OnInit {
     }
   }
 
-  async popAlert() {
+  async popAlert(message: string = 'Usuario o Contraseña incorrecta') {
     const alert = await this.alertcontroller.create({
       header: 'Error',
-      message: 'Usuario o Contraseña incorrecta',
+      message: message,
       buttons: ['OK'],
     });
     await alert.present();

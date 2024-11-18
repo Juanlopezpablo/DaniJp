@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { CrearuserPageRoutingModule } from './crearuser-routing.module';
 
-import { CrearuserPage } from './crearuser.page';
+import { crearuserpage } from './crearuser.page';
 
 @NgModule({
   imports: [
@@ -15,6 +15,6 @@ import { CrearuserPage } from './crearuser.page';
     IonicModule,
     CrearuserPageRoutingModule
   ],
-  declarations: [CrearuserPage]
+  declarations: [crearuserpage]
 })
-export class CrearuserPageModule {}
+export class crearusercageModule {}

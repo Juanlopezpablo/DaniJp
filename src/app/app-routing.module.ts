@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AngularFireAuthGuard, redirectUnauthorizedTo} from '@angular/fire/compat/auth-guard';
 import { PageNotFoundComponent } from './component/page-not-found/page-not-found.component';
+
 import { PhotoComponent } from './component/photo/photo.component';
 
 
@@ -22,7 +23,8 @@ const routes: Routes = [
   },
   {
     path: 'crearuser',
-    loadChildren: () => import('./page/crearuser/crearuser.module').then( m => m.CrearuserPageModule)
+    loadChildren: () => import('./page/crearuser/crearuser.module').then(m => m.crearusercageModule)
+
   },
   {
     path: 'recuperarpass',
