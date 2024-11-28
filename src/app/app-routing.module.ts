@@ -5,7 +5,6 @@ import { PageNotFoundComponent } from './component/page-not-found/page-not-found
 
 import { PhotoComponent } from './component/photo/photo.component';
 
-
 const redireccionarLogin = () => redirectUnauthorizedTo(['/Login']);
 const routes: Routes = [
   {
@@ -22,13 +21,8 @@ const routes: Routes = [
     loadChildren: () => import('./page/login/login.module').then( m => m.LoginPageModule)
   },
   {
-    path: 'crearuser',
-    loadChildren: () => import('./page/crearuser/crearuser.module').then(m => m.crearusercageModule)
-
-  },
-  {
-    path: 'recuperarpass',
-    loadChildren: () => import('./page/recuperarpass/recuperarpass.module').then( m => m.RecuperarpassPageModule)
+    path: 'crear-usuario',
+    loadChildren: () => import('./page/crearuser/crearuser.module').then( m => m.crearusercageModule)
   },
   {
     path: 'principal',
@@ -36,8 +30,16 @@ const routes: Routes = [
     loadChildren: () => import('./page/principal/principal.module').then( m => m.PrincipalPageModule)
   },
   {
-    path: 'testapi',
-    loadChildren: () => import('./page/testapi/testapi.module').then( m => m.TestapiPageModule)
+    path: 'recuperarpass',
+    loadChildren: () => import('./page/recuperarpass/recuperarpass.module').then( m => m.RecuperarpassPageModule)
+  },
+  {
+    path: 'perfil',
+    loadChildren: () => import('./page/perfil/perfil.module').then( m => m.PerfilPageModule)
+  },
+  {
+    path: 'apitest',
+    loadChildren: () => import('./page/apitest/apitest.module').then( m => m.ApitestPageModule)
   },
   {
     path: 'photo',
@@ -48,12 +50,16 @@ const routes: Routes = [
     loadChildren: () => import('./page/agregar-vehiculo/agregar-vehiculo.module').then( m => m.AgregarVehiculoPageModule)
   },
   {
+    path: '**',
+    component: PageNotFoundComponent
+  },
+  {
     path: 'lista-vehiculos',
     loadChildren: () => import('./page/lista-vehiculos/lista-vehiculos.module').then( m => m.ListaVehiculosPageModule)
   },
   {
-    path: '**',
-    component: PageNotFoundComponent
+    path: 'testapi',
+    loadChildren: () => import('./page/testapi/testapi.module').then( m => m.TestapiPageModule)
   },
   
 ];
