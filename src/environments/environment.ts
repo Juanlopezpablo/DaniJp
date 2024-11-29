@@ -13,6 +13,7 @@ export const environment = {
     appId: "1:557114941202:web:31b8ec95be868008db1dcb",
     measurementId: "G-13MZYZMY33"
   },
+  
   apiUrl:"https://uber-nodejs-server-git-d61f89-guillermovillacuratorres-projects.vercel.app/api/" //uber.matiivilla.cl
 };
 

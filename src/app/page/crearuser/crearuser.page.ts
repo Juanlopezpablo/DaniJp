@@ -28,9 +28,8 @@ export class crearuserpage implements OnInit {
   ngOnInit() {}
 
   async registrar() {
-    // Verificación de campos requeridos
     if (!this.nombre || !this.correo_electronico || !this.password || !this.telefono) {
-      this.popAlert("Por favor, completa todos los campos.");
+      this.popAlert("los campos son obligatorios.");
       return;
     }
 
