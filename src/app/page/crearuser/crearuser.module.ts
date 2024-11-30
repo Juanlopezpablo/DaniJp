@@ -17,4 +17,4 @@ import { crearuserpage } from './crearuser.page';
   ],
   declarations: [crearuserpage]
 })
-export class crearusercageModule {}
+export class CrearUserPageModule {}

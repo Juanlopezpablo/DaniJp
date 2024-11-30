@@ -3,6 +3,8 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AngularFireAuthGuard, redirectUnauthorizedTo} from '@angular/fire/compat/auth-guard';
 import { PageNotFoundComponent } from './component/page-not-found/page-not-found.component';
 
+import { SobreNosotrosPage } from './page/sobre-nosotros/sobre-nosotros.page';  // Asegúrate de usar el nombre correcto aquí
+
 import { PhotoComponent } from './component/photo/photo.component';
 
 const redireccionarLogin = () => redirectUnauthorizedTo(['/Login']);
@@ -21,8 +23,8 @@ const routes: Routes = [
     loadChildren: () => import('./page/login/login.module').then( m => m.LoginPageModule)
   },
   {
-    path: 'crear-usuario',
-    loadChildren: () => import('./page/crearuser/crearuser.module').then( m => m.crearusercageModule)
+    path: 'crearuser',
+    loadChildren: () => import('./page/crearuser/crearuser.module').then( m => m.CrearUserPageModule)
   },
   {
     path: 'principal',
@@ -50,26 +52,25 @@ const routes: Routes = [
     loadChildren: () => import('./page/agregar-vehiculo/agregar-vehiculo.module').then( m => m.AgregarVehiculoPageModule)
   },
   {
-    path: '**',
-    component: PageNotFoundComponent
-  },
-  {
     path: 'lista-vehiculos',
     loadChildren: () => import('./page/lista-vehiculos/lista-vehiculos.module').then( m => m.ListaVehiculosPageModule)
   },
   {
     path: 'testapi',
     loadChildren: () => import('./page/testapi/testapi.module').then( m => m.TestapiPageModule)
-  },  {
+  },
+  {
     path: 'contacto',
     loadChildren: () => import('./page/contacto/contacto.module').then( m => m.ContactoPageModule)
   },
   {
-    path: 'sobre-nosotros',
-    loadChildren: () => import('./page/sobre-nosotros/sobre-nosotros.module').then( m => m.SobreNosotrosPageModule)
+    path: '**',
+    component: PageNotFoundComponent
   },
-
-  
+  {
+    path: 'sobre-nosotros',
+    loadChildren: () => import('./page/sobre-nosotros/sobre-nosotros.module').then( m => m.SobreNosotrosPageModule)  // Usar el nombre correcto aquí
+  },   
 ];
 
 @NgModule({
