@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/principal"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Contacto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Contáctanos</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>
+        Si tienes alguna consulta, no dudes en ponerte en contacto con nosotros. 
+        Puedes enviarnos un mensaje a través del formulario a continuación o escribirnos directamente a nuestros correos:
+        <br>
+        <strong>josh.cruz&#64;duocuc.cl</strong><br>
+        <strong>ni.navarroi&#64;duocuc.cl</strong>
+      </p>
+      
+
+      <form>
+        <ion-item>
+          <ion-label position="stacked">Nombre</ion-label>
+          <ion-input type="text" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Correo Electrónico</ion-label>
+          <ion-input type="email" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Mensaje</ion-label>
+          <ion-textarea rows="5" required></ion-textarea>
+        </ion-item>
+
+        <ion-button expand="full" type="submit">Enviar</ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-title>
+      © 2024 DaniJp
+    </ion-title>
+  </ion-toolbar>
+</ion-footer>

@@ -60,7 +60,15 @@ const routes: Routes = [
   {
     path: 'testapi',
     loadChildren: () => import('./page/testapi/testapi.module').then( m => m.TestapiPageModule)
+  },  {
+    path: 'contacto',
+    loadChildren: () => import('./page/contacto/contacto.module').then( m => m.ContactoPageModule)
   },
+  {
+    path: 'sobre-nosotros',
+    loadChildren: () => import('./page/sobre-nosotros/sobre-nosotros.module').then( m => m.SobreNosotrosPageModule)
+  },
+
   
 ];
 

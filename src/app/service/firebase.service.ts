@@ -9,22 +9,22 @@ export class FirebaseService {
   constructor(private firebase:AngularFireAuth) { }
 
   async auth(email:string, password:string){
-    const request=await this.firebase.signInWithEmailAndPassword(email,password)
+    const request= await this.firebase.signInWithEmailAndPassword(email,password)
     return request
   }
   
   async registrar(email:string, password:string){
-    const request=await this.firebase.createUserWithEmailAndPassword(email,password)
+    const request= await this.firebase.createUserWithEmailAndPassword(email,password)
     return request
   }
 
   async recuperar(email:string,){
-    const request=await this.firebase.sendPasswordResetEmail(email)
+    const request= await this.firebase.sendPasswordResetEmail(email)
     return request
   }
 
   async logout(){
-    await this.firebase.signOut()
+    const request= await this.firebase.signOut()
   }
 
 }

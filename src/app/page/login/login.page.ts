@@ -23,39 +23,34 @@ export class LoginPage implements OnInit {
 
   async login(){
     try{
-      let usuario=await this.firebase.auth(this.email, this.password);
-      this.tokenID = await usuario.user?.getIdToken();
-      console.log("token",await usuario.user?.getIdToken()) 
+      let usuario=await this.firebase.auth(this.email,this.password);
+      this.tokenID=await usuario.user?.getIdToken();
       console.log(usuario);
-      const navigationExtras: NavigationExtras ={
-        queryParams: {email: this.email, password: this.password}
+      console.log("TokenID", await usuario.user?.getIdToken());
+      const NavigationExtras:NavigationExtras={
+        queryParams: {email:this.email}
       };
-      this.router.navigate(['/principal'], navigationExtras);
+      this.router.navigate(['/principal'], NavigationExtras);
       this.pruebaStorage();
     } catch(error){
       console.log(error);
-      this.popAlert();
+      this.popalert();
     }
   }
-  async popAlert(){
-    const alert=await this.alertcontroller.create({
-      header:'error',
-      message:"Usuario o contraseña incorrecto",
-      buttons:[' OK']
+  async popalert(){
+    const alert = await this.alertcontroller.create({
+      header: 'Error',
+      message: 'Usuario o contraseña incorrecta',
+      buttons: ['Ok']
     })
     await alert.present();
   }
 
   async pruebaStorage(){
-    const jsonToken:any=[
-      {
-        "token":this.tokenID
-      },
-      {
-        "email":this.email
-      }
-    ];
+    const jsonToken:any={
+      token:this.tokenID
+    }
     this.storage.agregarStorage(jsonToken);
-    console.log(await this.storage.obtenerStorage());
+    console.log(await this.storage.obtenerStorage)
   }
 }
