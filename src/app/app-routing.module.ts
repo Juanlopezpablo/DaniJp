@@ -63,14 +63,15 @@ const routes: Routes = [
     path: 'contacto',
     loadChildren: () => import('./page/contacto/contacto.module').then( m => m.ContactoPageModule)
   },
+    {
+    path: 'sobre-nosotros',
+    canActivate:[AngularFireAuthGuard], data:{authGuardPipe:redireccionarLogin},
+    loadChildren: () => import('./page/sobre-nosotros/sobre-nosotros.module').then( m => m.SobreNosotrosPageModule)
+  }, 
   {
     path: '**',
     component: PageNotFoundComponent
   },
-  {
-    path: 'sobre-nosotros',
-    loadChildren: () => import('./page/sobre-nosotros/sobre-nosotros.module').then( m => m.SobreNosotrosPageModule)  // Usar el nombre correcto aquí
-  },   
 ];
 
 @NgModule({
