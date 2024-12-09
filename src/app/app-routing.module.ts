@@ -3,8 +3,6 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AngularFireAuthGuard, redirectUnauthorizedTo} from '@angular/fire/compat/auth-guard';
 import { PageNotFoundComponent } from './component/page-not-found/page-not-found.component';
 
-import { SobreNosotrosPage } from './page/sobre-nosotros/sobre-nosotros.page';  // Asegúrate de usar el nombre correcto aquí
-
 import { PhotoComponent } from './component/photo/photo.component';
 
 const redireccionarLogin = () => redirectUnauthorizedTo(['/Login']);
@@ -47,6 +45,7 @@ const routes: Routes = [
     path: 'photo',
     component: PhotoComponent
   },
+  
   {
     path: 'agregar-vehiculo',
     loadChildren: () => import('./page/agregar-vehiculo/agregar-vehiculo.module').then( m => m.AgregarVehiculoPageModule)
@@ -63,16 +62,22 @@ const routes: Routes = [
     path: 'contacto',
     loadChildren: () => import('./page/contacto/contacto.module').then( m => m.ContactoPageModule)
   },
-    {
-    path: 'sobre-nosotros',
-    canActivate:[AngularFireAuthGuard], data:{authGuardPipe:redireccionarLogin},
-    loadChildren: () => import('./page/sobre-nosotros/sobre-nosotros.module').then( m => m.SobreNosotrosPageModule)
-  }, 
+  {
+    path: 'ver-vehiculos',
+    loadChildren: () => import('./page/ver-vehiculos/ver-vehiculos.module').then( m => m.VerVehiculosPageModule)
+  },
+  
+  {
+    path: 'agregar-viaje',
+    loadChildren: () => import('./page/agregar-viaje/agregar-viaje.module').then( m => m.AgregarViajePageModule)
+  },
   {
     path: '**',
     component: PageNotFoundComponent
-  },
-];
+  }
+
+
+  ];
 
 @NgModule({
   imports: [

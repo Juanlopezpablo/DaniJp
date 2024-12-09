@@ -108,21 +108,83 @@ export class ApiService {
     }
   }
 
-  async obtenerVehiculo(){
+  async obtenerViaje(data: dataGetViaje) {
     try {
       const params = {
-        p_id: "",
-        token: ''
-      }
-      const response = await lastValueFrom(this.http.get<any>(environment.apiUrl + 'vehiculo/obtener',{params}));
-      return response;
+        p_id_usuario: data.p_id_usuario, // ID del usuario (opcional o requerido según la lógica)
+        token: data.token, // Token para la autenticación
+      };
+  
+      // Realiza la solicitud GET con los parámetros
+      const response = await lastValueFrom(
+        this.http.get<any>(environment.apiUrl + 'viaje/obtener', { params })
+      );
+  
+      return response; // Devuelve los datos al llamador
     } catch (error) {
-      throw error;
+      throw error; // Lanza el error para manejarlo en el componente
     }
-
   }
 
+  async actualizarViaje(data: bodyActualizarViaje) {
+    try {
+      const response = await lastValueFrom(
+        this.http.post<any>(`${environment.apiUrl}/viaje/actualiza_estado_viaje`, data)
+      );
+      return response;
+    } catch (error) {
+      console.error('Error al actualizar viaje:', error);
+      throw new Error('No se pudo actualizar el estado del viaje. Intenta nuevamente.');
+    }
+  }
+
+  async obtenerVehiculo(data: { p_id?: number; token: string }) {
+    try {
+      const params: any = { token: data.token };
+  
+      if (data.p_id) {
+        params.p_id = data.p_id;
+      }
+  
+      console.log('Parámetros enviados a la API:', params);
+  
+      const apiUrl = `${environment.apiUrl.replace(/\/+$/, '')}/vehiculo/obtener`;
+  
+      const response = await lastValueFrom(
+        this.http.get<any>(apiUrl, { params })
+      );
+  
+      return response;
+    } catch (error) {
+      console.error('Error en obtenerVehiculo:', error);
+      throw error;
+    }
+  }
+  
+  async agregarViaje(datosViaje:bodyViaje){
+
+    try {
+      
+      const body = {
+        p_id_usuario: datosViaje.p_id_usuario,
+        p_ubicacion_origen: datosViaje.p_ubicacion_origen,
+        p_ubicacion_destino: datosViaje.p_ubicacion_destino,
+        p_costo: datosViaje.p_costo,
+        p_id_vehiculo: datosViaje.p_id_vehiculo,
+        token: datosViaje.token
+      };
+
+      const response = await lastValueFrom(this.http.post<any>(environment.apiUrl + 'viaje/agregar', body));
+      return response;
+
+    } catch (error) {
+      console.log(error)
+      throw error
+    }
+  }
+    
 }
+
 
 interface bodyUser {
   p_nombre: string;
@@ -145,4 +207,29 @@ interface bodyVehiculo {
   p_color: string;
   p_tipo_combustible: string;
   token: string;
+}
+
+interface dataGetVehiculo {
+  p_id: number;
+  token: string;
+}
+
+interface bodyViaje {
+  p_id_usuario: number;
+  p_ubicacion_origen:string;
+  p_ubicacion_destino: string;
+  p_costo: number;
+  p_id_vehiculo: number;
+  token: string
+}
+
+interface dataGetViaje {
+  p_id_usuario: number;
+  token: string;
+}
+
+interface bodyActualizarViaje {
+  p_id: number; // ID único del viaje
+  p_id_estado: number; // Estado del viaje (ejemplo: 1 = pendiente, 2 = completado)
+  token: string; // Token del usuario
 }

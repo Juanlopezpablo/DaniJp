@@ -1,13 +1,14 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <!-- Botón de Volver Atrás -->
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
     <ion-title>Crear Usuario</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding" style="--background: #d6eaf8;">
-  <ion-buttons slot="start">
-    <ion-back-button defaultHref="/"></ion-back-button>
-  </ion-buttons>
   <img src="assets/img/DeloDaju.jpg" alt="" class="center-image">
 
   <div>
@@ -17,8 +18,8 @@
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Correo_electronico</ion-label>
-      <ion-input id="correo_electronico" [(ngModel)]="correo_electronico" name="correo_electronico" type="correo_electronico"></ion-input>
+      <ion-label position="floating">Correo Electrónico</ion-label>
+      <ion-input id="correo_electronico" [(ngModel)]="correo_electronico" name="correo_electronico" type="email"></ion-input>
     </ion-item>
 
     <ion-item>
@@ -44,3 +45,4 @@
     <ion-title>© 2024 Dani Jp</ion-title>
   </ion-toolbar>
 </ion-footer>
+

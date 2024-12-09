@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'; 
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { UserModel } from 'src/app/models/usuario';
 import { ApiService } from 'src/app/service/api.service';
 import { FirebaseService } from 'src/app/service/firebase.service';
@@ -11,58 +12,161 @@ import { StorageService } from 'src/app/service/storage.service';
   styleUrls: ['./principal.page.scss'],
 })
 export class PrincipalPage implements OnInit {
-
-  email: string = "";  // Almacenamos el email
-  usuario: UserModel[] = [];  // Almacenamos los datos del usuario
-  vehiculos: any[] = [];  // Almacenamos los vehículos obtenidos
-
+  email: string = '';
+  usuario: UserModel[] = []; // Datos del usuario
+  vehiculo: any[] = []; // Lista de vehículos
+ 
   constructor(
     private firebase: FirebaseService,
     private router: Router,
     private activate: ActivatedRoute,
     private storage: StorageService,
-    private apiservice: ApiService
-  ) { 
-    // Obtenemos los parámetros de la ruta, como el email del usuario
-    this.activate.queryParams.subscribe(params => {
+    private apiservice: ApiService,
+    private alertcontroller: AlertController
+  ) {
+    this.activate.queryParams.subscribe((params) => {
       this.email = params['email'];
-      console.log(this.email);
+      console.log('Email recibido:', this.email);
     });
   }
 
   ngOnInit() {
-    this.cargarUsuario();  // Cargar datos del usuario cuando se inicia la página
+    this.cargarUsuario();
   }
 
-  // Método de logout que elimina la sesión del usuario y navega a la página de login
+  // Cerrar sesión
   async logout() {
-    await this.firebase.logout();  // Cerrar sesión
-    this.router.navigateByUrl("login");  // Redirigir al login
+    await this.firebase.logout();
+    this.router.navigateByUrl('/login');
   }
 
-  // Método para cargar los datos del usuario desde el storage y luego hacer la consulta
+  // Cargar los datos del usuario
   async cargarUsuario() {
-    let dataStorage = await this.storage.obtenerStorage();  // Obtener datos de storage
-    const req = await this.apiservice.obtenerUsuario(
-      {
+    try {
+      const dataStorage = await this.storage.obtenerStorage();
+      const req = await this.apiservice.obtenerUsuario({
         p_correo: this.email,
-        token: dataStorage[0].token
+        token: dataStorage[0].token,
+      });
+
+      if (req && req.data.length > 0) {
+        this.usuario = req.data;
+        console.log('Usuario cargado:', this.usuario);
+      } else {
+        console.error('No se encontraron datos del usuario.');
+        this.popAlert('Error', 'No se pudo cargar la información del usuario.');
       }
-    );
-    this.usuario = req.data;  // Asignamos la respuesta al array de usuario
-    console.log("DATA INICIO USUARIO ", this.usuario);
+    } catch (error) {
+      console.error('Error al cargar usuario:', error);
+      this.popAlert('Error', 'Hubo un problema al cargar los datos del usuario.');
+    }
   }
 
-  // Método para navegar a la página de registrar vehículo
+  // Registrar vehículo
   async btnRegistrarVehiculo() {
-    const navigationExtras: NavigationExtras = {
-      queryParams: { email: this.email }  // Pasamos el email como parámetro
-    };
-    this.router.navigate(['/agregar-vehiculo'], navigationExtras);  // Navegar a la página de registro de vehículo
+    const navigationExtras: NavigationExtras = { queryParams: { email: this.email } };
+    this.router.navigate(['/agregar-vehiculo'], navigationExtras);
   }
 
-  // Método para obtener los vehículos desde la API
-  async btnObtenerVehiculos() {
-    this.vehiculos = await this.apiservice.obtenerVehiculo();  // Obtenemos los vehículos
+  // Obtener vehículos
+  async ObtenerVehiculos() {
+    try {
+      const dataStorage = await this.storage.obtenerStorage();
+      const req = await this.apiservice.obtenerVehiculo({
+        p_id: this.usuario[0].id_usuario,
+        token: dataStorage[0].token,
+      });
+
+      if (req && req.data.length > 0) {
+        this.vehiculo = req.data;
+        console.log('Vehículos cargados:', this.vehiculo);
+
+        const navigationExtras: NavigationExtras = { queryParams: { email: this.email } };
+        this.router.navigate(['/ver-vehiculos'], navigationExtras);
+      } else {
+        console.error('No hay vehículos registrados.');
+        this.popAlertNoVehiculos();
+      }
+    } catch (error) {
+      console.error('Error al obtener vehículos:', error);
+      this.popAlertNoVehiculos();
+    }
+  }
+
+  // Agregar viaje
+  async AgregarViaje() {
+  try {
+    const dataStorage = await this.storage.obtenerStorage();
+    const vehiculos = await this.apiservice.obtenerVehiculo({
+      p_id: this.usuario[0].id_usuario,
+      token: dataStorage[0].token,
+    });
+
+    if (vehiculos.data.length > 0) {
+      const navigationExtras: NavigationExtras = {
+        queryParams: { email: this.email, id_vehiculo: vehiculos.data[0].id_vehiculo },
+      };
+      this.router.navigate(['/agregar-viaje'], navigationExtras);
+    } else {
+      this.popAlertNoVehiculos();
+    }
+  } catch (error) {
+    console.error('Error al obtener vehículos:', error);
+  }
+}
+
+
+  // Cargar viajes
+  async cargarViajes() {
+    try {
+      const dataStorage = await this.storage.obtenerStorage();
+      const req = await this.apiservice.obtenerViaje({
+        p_id_usuario: this.usuario[0].id_usuario,
+        token: dataStorage[0].token,
+      });
+
+      if (req && req.data.length > 0) {
+        console.log('Viajes cargados:', req.data);
+
+        const navigationExtras: NavigationExtras = { queryParams: { email: this.email } };
+        this.router.navigate(['/ver-viajes'], navigationExtras);
+      } else {
+        console.error('No hay viajes registrados.');
+        this.popAlertNoViajes();
+      }
+    } catch (error) {
+      console.error('Error al cargar viajes:', error);
+      this.popAlertNoViajes();
+    }
+  }
+
+  // Mostrar alerta cuando no hay vehículos registrados
+  async popAlertNoVehiculos() {
+    const alert = await this.alertcontroller.create({
+      header: 'Sin Vehículos',
+      message: 'No tienes vehículos registrados.',
+      buttons: ['OK'],
+    });
+    await alert.present();
+  }
+
+  // Mostrar alerta cuando no hay viajes registrados
+  async popAlertNoViajes() {
+    const alert = await this.alertcontroller.create({
+      header: 'Sin Viajes',
+      message: 'No tienes viajes registrados.',
+      buttons: ['OK'],
+    });
+    await alert.present();
+  }
+
+  // Mostrar alerta genérica
+  async popAlert(header: string, message: string) {
+    const alert = await this.alertcontroller.create({
+      header,
+      message,
+      buttons: ['OK'],
+    });
+    await alert.present();
   }
 }

@@ -26,7 +26,7 @@ export class LoginPage implements OnInit {
       let usuario=await this.firebase.auth(this.email,this.password);
       this.tokenID=await usuario.user?.getIdToken();
       console.log(usuario);
-      console.log("TokenID", await usuario.user?.getIdToken());
+      console.log("Token", await usuario.user?.getIdToken());
       const NavigationExtras:NavigationExtras={
         queryParams: {email:this.email}
       };
@@ -47,9 +47,14 @@ export class LoginPage implements OnInit {
   }
 
   async pruebaStorage(){
-    const jsonToken:any={
-      token:this.tokenID
-    }
+    const jsonToken:any=[
+      {
+        "token":this.tokenID
+      },
+      {
+        "email":this.email
+      }
+    ];
     this.storage.agregarStorage(jsonToken);
     console.log(await this.storage.obtenerStorage)
   }
