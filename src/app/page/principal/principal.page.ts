@@ -144,7 +144,7 @@ export class PrincipalPage implements OnInit {
   async popAlertNoVehiculos() {
     const alert = await this.alertcontroller.create({
       header: 'Sin Vehículos',
-      message: 'No tienes vehículos registrados.',
+      message: 'No hay vehículos registrados.',
       buttons: ['OK'],
     });
     await alert.present();
@@ -154,7 +154,7 @@ export class PrincipalPage implements OnInit {
   async popAlertNoViajes() {
     const alert = await this.alertcontroller.create({
       header: 'Sin Viajes',
-      message: 'No tienes viajes registrados.',
+      message: 'No hay viajes registrados.',
       buttons: ['OK'],
     });
     await alert.present();

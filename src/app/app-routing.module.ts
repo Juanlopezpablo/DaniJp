@@ -72,9 +72,15 @@ const routes: Routes = [
     loadChildren: () => import('./page/agregar-viaje/agregar-viaje.module').then( m => m.AgregarViajePageModule)
   },
   {
+    path: 'ver-viajes',
+    loadChildren: () => import('./page/ver-viajes/ver-viajes.module').then( m => m.VerViajesPageModule)
+  },
+  {
     path: '**',
     component: PageNotFoundComponent
-  }
+  },
+ 
+
 
 
   ];

@@ -1,0 +1,22 @@
+<ion-content class="ion-padding">
+  <!-- Spinner de carga -->
+  <div class="spinner-container" *ngIf="!viajes.length">
+    <ion-spinner></ion-spinner>
+    <p>Cargando viajes...</p>
+  </div>
+
+  <!-- Mensaje si no hay viajes -->
+  <div *ngIf="viajes.length === 0 && usuario.length > 0">
+    <p>No tienes viajes registrados.</p>
+  </div>
+
+  <!-- Lista de Viajes -->
+  <ion-card *ngFor="let viaje of viajes" class="vehiculo-card">
+    <ion-card-content>
+      <p><strong>Origen:</strong> {{ viaje.ubicacion_origen }}</p>
+      <p><strong>Destino:</strong> {{ viaje.ubicacion_destino }}</p>
+      <p><strong>Costo:</strong> {{ viaje.costo }}</p>
+      <p><strong>Estado:</strong> {{ viaje.id_estado }}</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

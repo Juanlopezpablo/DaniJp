@@ -42,6 +42,11 @@
           <ion-label>Crear Viaje</ion-label>
         </ion-item>
 
+        <ion-item button (click)="cargarViajes()">>
+          <ion-icon name="car-outline" slot="start"></ion-icon>
+          <ion-label>Ver Viajes</ion-label>
+        </ion-item> 
+
      
         <ion-item class="custom-button" button [routerLink]="['/photo']" aria-label="Tomar foto">
           <ion-icon name="camera-outline" slot="start"></ion-icon>
