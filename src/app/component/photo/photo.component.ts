@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 @Component({
